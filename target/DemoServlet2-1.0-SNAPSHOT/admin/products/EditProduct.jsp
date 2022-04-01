@@ -28,7 +28,7 @@
         <input class="w3-input w3-border" name="status" type="number" value="<%=obj.getStatus()%>"></p>
 
     <p>
-        <button class="w3-btn w3-blue">Submit</button>
+        <button class="w3-btn w3-blue" type="submit">Submit</button>
         <input type="reset" class="w3-btn w3-teal" value="Reset">
     </p>
 </form>

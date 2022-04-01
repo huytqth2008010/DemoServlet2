@@ -1,27 +1,83 @@
 package com.example.DemoServlet2.entity;
 
+import com.example.DemoServlet2.annocation.Column;
+import com.example.DemoServlet2.annocation.Table;
+import com.example.DemoServlet2.util.ValidateUtil;
+
+import java.util.HashMap;
+import java.util.Objects;
+
+@Table(name = "products")
 public class Product {
+    @Column(name = "id",type = "INT PRIMARY KEY AUTO_INCREMENT")
     private int id;
+
+    @Column(name = "name",type = "VARCHAR(255)")
     private String name;
+
+    @Column(name = "thumbnail",type = "TEXT")
     private String thumbnail;
-    private int price;
+
+    @Column(name = "price",type = "DOUBLE")
+    private Double price;
+
+    @Column(name = "status",type = "INT")
     private int status;
 
     public Product() {
     }
+    private HashMap<String, String> error;
 
-    public Product(String name, String thumbnail, int price) {
-        this.name = name;
-        this.thumbnail = thumbnail;
-        this.price = price;
+    public void checkValid(){
+        this.error = new HashMap<>();
+        if (this.name == null || this.name.length() == 0){
+            this.error.put("name","Name tis required!");
+        }
+        if (this.thumbnail == null || this.thumbnail.length() == 0){
+            this.error.put("thumbnail","Thumbnail tis required!");
+        }
+//        if (!ValidateUtil.checkEmail(this.thumbnail)){
+//            this.error.put("thumbnail","Thumbnail tis required!");
+//        }
+        if (this.price == 0){
+            this.error.put("price","Name tis required!");
+        }
+    }
+    public HashMap<String, String> getErrors(){
+        checkValid();
+        return error;
+    }
+    public boolean isValid(){
+        checkValid();
+        return error == null || error.size() == 0;
+
     }
 
-    public Product(int id, String name, String thumbnail, int price, int status) {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return id == product.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    public Product(int id, String name, String thumbnail, Double price, int status) {
         this.id = id;
         this.name = name;
         this.thumbnail = thumbnail;
         this.price = price;
         this.status = status;
+    }
+
+    public Product(String name, String thumbnail, Double price) {
+        this.name = name;
+        this.thumbnail = thumbnail;
+        this.price = price;
     }
 
     @Override
@@ -59,11 +115,11 @@ public class Product {
         this.thumbnail = thumbnail;
     }
 
-    public int getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 

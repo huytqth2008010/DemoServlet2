@@ -1,12 +1,7 @@
-<%@ page import="java.util.List" %>
-<%@ page import="com.example.DemoServlet2.entity.Product" %>
-<%@ page import="java.util.HashSet" %>
-<%
-    List<Product> list = (List<Product>)request.getAttribute("listObj");
-    HashSet<Product> recentView
-                    = (HashSet<Product>) session.getAttribute("recentViewProduct");
-%>
 
+<%@ page import="com.example.DemoServlet2.entity.Product" %><%
+    Product obj = (Product)request.getAttribute("obj");
+%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="en">
 <head>
@@ -28,7 +23,7 @@
 
     <!-- Custom styles for this page -->
     <link href="/assets/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
 </head>
 
 <body id="page-top">
@@ -260,69 +255,33 @@
             <!-- Begin Page Content -->
             <div class="container-fluid">
 
-                <!-- Page Heading -->
-                <h1 class="h3 mb-2 text-gray-800">List Product</h1>
-                <p class="mb-4">List all product.</p>
-
                 <!-- DataTales Example -->
                 <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">DataTables Example <a style="float: right" href="/products/create" class="btn btn-facebook ">Create New Product </a></h6>
-
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                <thead>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Name</th>
-                                    <th>Thumbnail</th>
-                                    <th>Price</th>
-                                    <th>Status</th>
-                                    <th>Actives</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <%
-                                    for (int i = 0; i < list.size(); i++) {
-                                        Product obj = list.get(i);
-                                %>
-                                <tr>
-                                    <td><%=obj.getId()%></td>
-                                    <td><%=obj.getName()%></td>
-                                    <td><img src="<%=obj.getThumbnail()%>" style="width: 150px" alt=""></td>
-                                    <td><%=obj.getPrice()%></td>
-                                    <td><%=obj.getStatus()%></td>
-                                    <td>
-                                        <a href="/products/detail?id=<%=obj.getId()%>" class="btn btn-warning btn-circle btn-sm"><i class="fas fa-info-circle"></i></a>&ensp;&ensp;
-                                        <a href="/products/edit?id=<%=obj.getId()%>" class="btn btn-primary btn-circle btn-sm"><i class="fas fa-edit"></i></a>&ensp;&ensp;
-                                        <a href="/products/delete?id=<%=obj.getId()%>" class="btn-delete btn btn-danger btn-circle btn-sm"><i class="fas fa-trash"></i></a>
-                                    </td>
-                                </tr>
-                                <%
-                                    }
-                                %>
-                                </tbody>
-                            </table>
-
+                    <div class="p-5">
+                        <div class="text-center">
+                            <h1 class="h4 text-gray-900 mb-4">Edit Product</h1>
                         </div>
+                        <form class="user" action="/products/edit" method="post">
+                            <div class="form-group">
+                                <input type="hidden" name="id" value="<%=obj.getId()%>">
+                                <input name="name" type="text" value="<%=obj.getName()%>" class="form-control form-control-user">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="thumbnail" class="form-control form-control-user" value="<%=obj.getThumbnail()%>">
+                            </div>
+                            <div class="form-group">
+                                <input type="number" name="price" class="form-control form-control-user" value="<%=obj.getPrice()%>">
+                            </div>
+                            <div class="form-group">
+                                <input type="status" name="status" class="form-control form-control-user" value="<%=obj.getStatus()%>">
+                            </div>
+                                <button class="w3-btn w3-blue">Submit</button>
+                                <input type="reset" class="w3-btn w3-teal" value="Reset">
+
+                        </form>
                     </div>
                 </div>
-                <%if (recentView != null && recentView.size() > 0){%>
-                <ul class="w3-ul w3-card-4">
-                    <%for (Product product: recentView) {%>
-                        <li class="w3-bar">
-                            <span onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-white w3-xlarge w3-right">×</span>
-                            <img src="<%=product.getThumbnail()%>" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
-                            <div class="w3-bar-item">
-                                <span class="w3-large"><%=product.getName()%></span><br>
-                                <span><%=product.getPrice()%></span>
-                            </div>
-                        </li>
-                    <%}%>
-                </ul>
-                <%}%>
+
             </div>
             <!-- /.container-fluid -->
 
@@ -385,27 +344,6 @@
 
 <!-- Page level custom scripts -->
 <script src="/assets/js/demo/datatables-demo.js"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        let listDeleteButton = document.querySelectorAll('.btn-delete');
-        for (let i = 0; i < listDeleteButton.length; i++) {
-            listDeleteButton[i].addEventListener('click', function (event) {
-                event.preventDefault();
-                if (confirm('Are you sure ?')){
-                    let xhr = new XMLHttpRequest();
-                    xhr.onreadystatechange = function () {
-                        if (xhr.readyState == 4 && xhr.status == 200){
-                            alert('Delete success');
-                            window.location.href = "/products";
-                        }
-                    }
-                    xhr.open('POST', this.href, false);
-                    xhr.send();
-                }
-            })
-        }
-    })
-</script>
 </body>
 
 </html>

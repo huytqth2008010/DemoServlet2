@@ -20,7 +20,7 @@ public class EditProductServlet extends HttpServlet {
             resp.getWriter().println("Not found");
         }else{
             req.setAttribute("obj",obj);
-            req.getRequestDispatcher("/admin/products/EditProduct.jsp").forward(req, resp);
+            req.getRequestDispatcher("/admin/products/EditProduct2.jsp").forward(req, resp);
         }
     }
 
@@ -34,7 +34,7 @@ public class EditProductServlet extends HttpServlet {
         }else{
            String name = req.getParameter("name");
            String thumbnail = req.getParameter("thumbnail");
-           int price = Integer.parseInt(req.getParameter("price"));
+           Double price = Double.parseDouble(req.getParameter("price"));
            int status  = Integer.parseInt(req.getParameter("status"));
             obj.setName(name);
             obj.setThumbnail(thumbnail);

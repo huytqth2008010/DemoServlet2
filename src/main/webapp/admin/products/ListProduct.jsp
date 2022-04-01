@@ -1,8 +1,12 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.example.DemoServlet2.entity.Product" %>
+<%@ page import="java.util.HashSet" %>
 <%
     List<Product> list = (List<Product>)request.getAttribute("listObj");
+    HashSet<Product> recentView
+                    = (HashSet<Product>) session.getAttribute("recentViewProduct");
 %>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="en">
 <head>
@@ -24,7 +28,7 @@
 
     <!-- Custom styles for this page -->
     <link href="/assets/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
 
 <body id="page-top">
@@ -40,7 +44,7 @@
             <div class="sidebar-brand-icon rotate-n-15">
                 <i class="fas fa-laugh-wink"></i>
             </div>
-            <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+            <div class="sidebar-brand-text mx-3">Demo <sup>Servlet</sup></div>
         </a>
 
         <!-- Divider -->
@@ -263,7 +267,8 @@
                 <!-- DataTales Example -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">DataTables Example <a style="float: right" href="/products/create" class="btn btn-facebook ">Create New Product </a></h6>
+
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -278,16 +283,6 @@
                                     <th>Actives</th>
                                 </tr>
                                 </thead>
-                                <!--                  <tfoot>-->
-                                <!--                    <tr>-->
-                                <!--                      <th>Name</th>-->
-                                <!--                      <th>Position</th>-->
-                                <!--                      <th>Office</th>-->
-                                <!--                      <th>Age</th>-->
-                                <!--                      <th>Start date</th>-->
-                                <!--                      <th>Salary</th>-->
-                                <!--                    </tr>-->
-                                <!--                  </tfoot>-->
                                 <tbody>
                                 <%
                                     for (int i = 0; i < list.size(); i++) {
@@ -300,21 +295,34 @@
                                     <td><%=obj.getPrice()%></td>
                                     <td><%=obj.getStatus()%></td>
                                     <td>
-                                        <a href="/products/detail?id=<%=obj.getId()%>"><i class="fas fa-info"></i></a>&ensp;&ensp;|&ensp;&ensp;
-                                        <a href="/products/edit?id=<%=obj.getId()%>"><i class="fas fa-edit"></i></a>&ensp;&ensp;|&ensp;&ensp;
-                                        <a href="/products/delete?id=<%=obj.getId()%>" class="btn-delete btn btn-danger btn-circle"><i class="fas fa-trash"></i></a>
+                                        <a href="/products/detail?id=<%=obj.getId()%>" class="btn btn-warning btn-circle btn-sm"><i class="fas fa-info-circle"></i></a>&ensp;&ensp;
+                                        <a href="/products/edit?id=<%=obj.getId()%>" class="btn btn-primary btn-circle btn-sm"><i class="fas fa-edit"></i></a>&ensp;&ensp;
+                                        <a href="/products/delete?id=<%=obj.getId()%>" class="btn-delete btn btn-danger btn-circle btn-sm"><i class="fas fa-trash"></i></a>
                                     </td>
                                 </tr>
                                 <%
                                     }
-
                                 %>
                                 </tbody>
                             </table>
+
                         </div>
                     </div>
                 </div>
-
+                <%if (recentView != null && recentView.size() > 0){%>
+                <ul class="w3-ul w3-card-4">
+                    <%for (Product product: recentView) {%>
+                        <li class="w3-bar">
+                            <span onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-white w3-xlarge w3-right">×</span>
+                            <img src="<%=product.getThumbnail()%>" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
+                            <div class="w3-bar-item">
+                                <span class="w3-large"><%=product.getName()%></span><br>
+                                <span><%=product.getPrice()%></span>
+                            </div>
+                        </li>
+                    <%}%>
+                </ul>
+                <%}%>
             </div>
             <!-- /.container-fluid -->
 

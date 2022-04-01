@@ -10,7 +10,7 @@ class ProductModelTest {
     @Test
     void save() {
         ProductModel model = new ProductModel();
-        model.save(new Product("a","a",7));
+        model.save(new Product("a","a",4.0));
     }
 
     @Test
@@ -37,5 +37,43 @@ class ProductModelTest {
     void delete() {
         ProductModel model = new ProductModel();
         model.delete(4);
+    }
+
+    @Test
+    void testSave() {
+        ProductModel model = new ProductModel();
+        model.save(new Product("a","a",4.0));
+    }
+
+    @Test
+    void testSave1() {
+        ProductModel model = new ProductModel();
+        model.save(new Product("a1","a", 4.0));
+    }
+
+    @Test
+    void testFindAll() {
+    }
+
+    @Test
+    void testFindById() {
+        ProductModel model = new ProductModel();
+        Product product = model.findById(17);
+        System.out.println(product.toString());
+    }
+
+    @Test
+    void testUpdate() {
+        ProductModel model = new ProductModel();
+        Product product = model.findById(18);
+        System.out.println(product.toString());
+        product.setName("Update");
+        model.update(18,product);
+    }
+
+    @Test
+    void testDelete() {
+        ProductModel model = new ProductModel();
+        model.delete(17);
     }
 }

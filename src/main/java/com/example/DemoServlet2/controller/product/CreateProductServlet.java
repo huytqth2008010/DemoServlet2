@@ -22,10 +22,17 @@ public class CreateProductServlet extends HttpServlet {
 
         String name = req.getParameter("name");
         String thumbnail = req.getParameter("thumbnail");
-        int price = Integer.parseInt(req.getParameter("price"));
+        Double price = Double.parseDouble(req.getParameter("price"));
         Product obj = new Product(name, thumbnail, price);
-        ProductModel model = new ProductModel();
-        model.save(obj);
-        resp.sendRedirect("/products/list");
+        if(!obj.isValid()){
+            req.setAttribute("errors", obj.getErrors());
+            req.getRequestDispatcher("/admin/products/CreateProduct.jsp").forward(req, resp);
+            return;
+
+        }else{
+            ProductModel model = new ProductModel();
+            model.save(obj);
+            resp.sendRedirect("/products/list");
+        }
     }
 }
