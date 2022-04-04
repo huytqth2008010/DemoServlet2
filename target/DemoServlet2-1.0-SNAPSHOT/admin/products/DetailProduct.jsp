@@ -8,10 +8,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <body>
-
 <form class="w3-container w3-card-4" action="/products/detail" method="post">
     <h2 class="w3-text-blue">Product Detail</h2>
-
     <p>
         <label class="w3-text-blue"><b>Name</b></label>
         <span><%=obj.getName()%></span>
@@ -26,6 +24,5 @@
         <span><%=obj.getStatus()%> </span>
     <p>
 </form>
-
 </body>
 </html>

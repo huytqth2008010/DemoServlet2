@@ -1,7 +1,14 @@
+<%@ page import="java.util.List" %>
+<%@ page import="com.example.DemoServlet2.entity.Product" %>
+<%@ page import="java.util.HashSet" %>
+<%@ page import="com.example.DemoServlet2.entity.ShoppingCart" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.example.DemoServlet2.entity.CartItem" %>
+<%
+    ShoppingCart shoppingCart = (ShoppingCart) request.getAttribute("shoppingCart");
 
-<%@ page import="com.example.DemoServlet2.entity.Product" %><%
-    Product obj = (Product)request.getAttribute("obj");
 %>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="en">
 <head>
@@ -23,7 +30,7 @@
 
     <!-- Custom styles for this page -->
     <link href="/assets/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
 
 <body id="page-top">
@@ -255,33 +262,56 @@
             <!-- Begin Page Content -->
             <div class="container-fluid">
 
+                <!-- Page Heading -->
+                <h1 class="h3 mb-2 text-gray-800">Continue Product</h1>
+                <p class="mb-4">List all product.</p>
+
                 <!-- DataTales Example -->
                 <div class="card shadow mb-4">
-                    <div class="p-5">
-                        <div class="text-center">
-                            <h1 class="h4 text-gray-900 mb-4">Edit Product</h1>
-                        </div>
-                        <form class="user" action="/products/edit" method="post">
-                            <div class="form-group">
-                                <input type="hidden" name="id" value="<%=obj.getId()%>">
-                                <input name="name" type="text" value="<%=obj.getName()%>" class="form-control form-control-user">
-                            </div>
-                            <div class="form-group">
-                                <input type="text" name="thumbnail" class="form-control form-control-user" value="<%=obj.getThumbnail()%>">
-                            </div>
-                            <div class="form-group">
-                                <input type="number" name="price" class="form-control form-control-user" value="<%=obj.getPrice()%>">
-                            </div>
-                            <div class="form-group">
-                                <input type="status" name="status" class="form-control form-control-user" value="<%=obj.getStatus()%>">
-                            </div>
-                                <button class="w3-btn w3-blue">Submit</button>
-                                <input type="reset" class="w3-btn w3-teal" value="Reset">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">DataTables Example <a style="float: right" href="/products/create" class="btn btn-facebook ">Create New Product </a></h6>
 
-                        </form>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Name</th>
+                                    <th>Thumbnail</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Actives</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <%
+                                    ArrayList<CartItem> cartItems = shoppingCart.getListItems();
+                                    for (int i = 0; i < cartItems.size(); i++) {
+                                        CartItem obj = cartItems.get(i);
+                                %>
+                                <tr>
+                                    <td><%=obj.getProductId()%></td>
+                                    <td><%=obj.getProductName()%></td>
+                                    <td><img src="<%=obj.getProductThumbnail()%>" style="width: 150px" alt=""></td>
+                                    <td><%=obj.getUnitPrice()%></td>
+                                    <td><%=obj.getQuantity()%></td>
+                                    <td>
+                                        <a href="/products/detail?id=<%=obj.getProductId()%>" class="btn btn-warning btn-circle btn-sm"><i class="fas fa-info-circle"></i></a>&ensp;&ensp;
+                                        <a href="/products/edit?id=<%=obj.getProductId()%>" class="btn btn-primary btn-circle btn-sm"><i class="fas fa-edit"></i></a>&ensp;&ensp;
+                                        <a href="/products/delete?id=<%=obj.getProductId()%>" class="btn-delete btn btn-danger btn-circle btn-sm"><i class="fas fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                                <%
+                                    }
+                                %>
+                                </tbody>
+                            </table>
+
+                        </div>
                     </div>
                 </div>
-
             </div>
             <!-- /.container-fluid -->
 
@@ -344,6 +374,7 @@
 
 <!-- Page level custom scripts -->
 <script src="/assets/js/demo/datatables-demo.js"></script>
+
 </body>
 
 </html>

@@ -70,4 +70,21 @@
     </servlet-mapping>
 
 
+    <servlet>
+        <servlet-name>AddProductToCartController</servlet-name>
+        <servlet-class>com.example.DemoServlet2.controller.shoppingcart.AddProductToCartController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddProductToCartController</servlet-name>
+        <url-pattern>/shopping-cart/add</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ShowShoppingCartController</servlet-name>
+        <servlet-class>com.example.DemoServlet2.controller.shoppingcart.ShowShoppingCartController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ShowShoppingCartController</servlet-name>
+        <url-pattern>/shopping-cart/show</url-pattern>
+    </servlet-mapping>
 </web-app>

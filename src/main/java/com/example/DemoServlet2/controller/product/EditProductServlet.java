@@ -20,7 +20,7 @@ public class EditProductServlet extends HttpServlet {
             resp.getWriter().println("Not found");
         }else{
             req.setAttribute("obj",obj);
-            req.getRequestDispatcher("/admin/products/EditProduct2.jsp").forward(req, resp);
+            req.getRequestDispatcher("/admin/products/EditProduct.jsp").forward(req, resp);
         }
     }
 

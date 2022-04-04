@@ -295,6 +295,7 @@
                                     <td><%=obj.getPrice()%></td>
                                     <td><%=obj.getStatus()%></td>
                                     <td>
+                                        <a href="/shopping-cart/add?productId=<%=obj.getId()%>&quantity=1" class="btn btn-warning btn-circle btn-sm"><i class="fas fa-info-circle"></i></a>&ensp;&ensp;
                                         <a href="/products/detail?id=<%=obj.getId()%>" class="btn btn-warning btn-circle btn-sm"><i class="fas fa-info-circle"></i></a>&ensp;&ensp;
                                         <a href="/products/edit?id=<%=obj.getId()%>" class="btn btn-primary btn-circle btn-sm"><i class="fas fa-edit"></i></a>&ensp;&ensp;
                                         <a href="/products/delete?id=<%=obj.getId()%>" class="btn-delete btn btn-danger btn-circle btn-sm"><i class="fas fa-trash"></i></a>
