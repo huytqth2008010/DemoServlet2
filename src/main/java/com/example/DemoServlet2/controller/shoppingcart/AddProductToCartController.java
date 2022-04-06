@@ -40,9 +40,13 @@ public class AddProductToCartController extends HttpServlet {
             return;
         }
         // ------------Ket thuc validate du lieu ----------------
+
         ShoppingCart shoppingCart = ShoppingCartFactory.getShoppingCartFromSession(req);
         shoppingCart.addItemToCart(product, quantity);
         ShoppingCartFactory.setShoppingCartToSession(req, shoppingCart);
+        req.getSession().setAttribute("message",  "Action session");
+        resp.sendRedirect("/shopping-cart/show");
+
     }
 
 

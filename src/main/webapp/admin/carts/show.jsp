@@ -263,19 +263,29 @@
             <div class="container-fluid">
 
                 <!-- Page Heading -->
-                <h1 class="h3 mb-2 text-gray-800">Continue Product</h1>
-                <p class="mb-4">List all product.</p>
+
 
                 <!-- DataTales Example -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">DataTables Example <a style="float: right" href="/products/create" class="btn btn-facebook ">Create New Product </a></h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Continue Product <a style="float: right" href="/products/create" class="btn btn-facebook ">Create New Product </a></h6>
 
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
+                                <%
+                                    if (session.getAttribute("message") != null){
+                                %>
+                                    <div class="w3-panel w3-pale-green w3-border">
+                                        <h3>Success !</h3>
+                                        <p><%= session.getAttribute("message") != null %></p>
+                                    </div>
+                                <%
+                                        session.removeAttribute("message");
+                                    }
+                                %>
                                 <tr>
                                     <th>Id</th>
                                     <th>Name</th>
@@ -300,7 +310,7 @@
                                     <td>
                                         <a href="/products/detail?id=<%=obj.getProductId()%>" class="btn btn-warning btn-circle btn-sm"><i class="fas fa-info-circle"></i></a>&ensp;&ensp;
                                         <a href="/products/edit?id=<%=obj.getProductId()%>" class="btn btn-primary btn-circle btn-sm"><i class="fas fa-edit"></i></a>&ensp;&ensp;
-                                        <a href="/products/delete?id=<%=obj.getProductId()%>" class="btn-delete btn btn-danger btn-circle btn-sm"><i class="fas fa-trash"></i></a>
+                                        <a href="/shopping-cart/delete?id=<%=obj.getProductId()%>" class="btn-delete btn btn-danger btn-circle btn-sm"><i class="fas fa-trash"></i></a>
                                     </td>
                                 </tr>
                                 <%
@@ -357,7 +367,27 @@
         </div>
     </div>
 </div>
-
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        let listDeleteButton = document.querySelectorAll('.btn-delete');
+        for (let i = 0; i < listDeleteButton.length; i++) {
+            listDeleteButton[i].addEventListener('click', function (event) {
+                event.preventDefault();
+                if (confirm('Are you sure ?')){
+                    let xhr = new XMLHttpRequest();
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState == 4 && xhr.status == 200){
+                            alert('Delete success');
+                            window.location.reload();
+                        }
+                    }
+                    xhr.open('DELETE', this.href, false);
+                    xhr.send();
+                }
+            })
+        }
+    })
+</script>
 <!-- Bootstrap core JavaScript-->
 <script src="/assets/vendor/jquery/jquery.min.js"></script>
 <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
